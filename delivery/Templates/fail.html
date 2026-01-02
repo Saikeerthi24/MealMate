@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign-In Failed - MealMate</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <h1>Sign-In Failed</h1>
-    <p>Invalid username or password. Please try again.</p>
+    <div class="content-wrapper">
+        <div class="alert alert-error">
+            <h1>Sign-In Failed</h1>
+            <p>Invalid username or password. Please try again.</p>
+            <a href="{% url 'open_signin' %}" class="btn btn-primary">Try Again</a>
+        </div>
+    </div>
 </body>
 </html>

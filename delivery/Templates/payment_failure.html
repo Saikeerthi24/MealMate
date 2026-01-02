@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - MealMate</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="payment-status-container">
+        <div class="payment-card status-error">
+            <div class="status-icon">✗</div>
+            <h1>Payment Failed</h1>
+            <div class="alert alert-error">
+                <p>{{ message|default:"Your payment could not be processed. Please try again." }}</p>
+            </div>
+            <a href="/" class="btn btn-primary">Go Back</a>
+        </div>
+    </div>
+</body>
+</html>

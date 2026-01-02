@@ -28,3 +28,24 @@ class Cart(models.Model):
 
     def total_price(self):
         return sum(item.price for item in self.items.all())
+
+class Order(models.Model):
+    ORDER_STATUS = [
+        ('PENDING', 'Pending'),
+        ('PAID', 'Paid'),
+        ('FAILED', 'Failed'),
+    ]
+    
+    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
+    items = models.ManyToManyField("Item", related_name="orders")
+    order_id = models.CharField(max_length=100, unique=True)
+    razorpay_order_id = models.CharField(max_length=100, blank=True, null=True)
+    razorpay_payment_id = models.CharField(max_length=100, blank=True, null=True)
+    razorpay_signature = models.CharField(max_length=255, blank=True, null=True)
+    amount = models.FloatField()
+    status = models.CharField(max_length=20, choices=ORDER_STATUS, default='PENDING')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Order {self.order_id} - {self.customer.username}"

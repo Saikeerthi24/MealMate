@@ -6,12 +6,16 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-
-        <h3>Welcome to Meal Mate!</h3>
-
-        <a href="open_signup">SIGN UP</a>
-        <br>
-        <a href="open_signin">SIGN IN</a>
-
+    <div class="page-header">
+        <h1>Welcome to MealMate!</h1>
+        <p>Order delicious food from your favorite restaurants</p>
+    </div>
+    
+    <div class="content-wrapper text-center">
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="open_signup" class="btn btn-primary">SIGN UP</a>
+            <a href="open_signin" class="btn btn-secondary">SIGN IN</a>
+        </div>
+    </div>
 </body>
 </html>

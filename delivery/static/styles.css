@@ -1,3 +1,614 @@
-body{
-    background-color: aquamarine;
+/* ========================================
+   MealMate - Professional CSS Stylesheet
+   Color Palette: Food Delivery Standard
+   ======================================== */
+
+/* Color Variables */
+:root {
+    --primary-color: #FF6B35;        /* Warm Orange - Primary Action */
+    --primary-dark: #E85A2B;          /* Darker Orange for Hover */
+    --secondary-color: #F77F00;       /* Golden Orange */
+    --accent-color: #06A77D;          /* Fresh Green - Success */
+    --accent-blue: #028090;           /* Teal Blue */
+    --background-light: #F8F9FA;      /* Light Background */
+    --background-white: #FFFFFF;      /* White */
+    --text-dark: #212529;             /* Primary Text */
+    --text-medium: #6C757D;           /* Secondary Text */
+    --text-light: #ADB5BD;            /* Muted Text */
+    --border-color: #DEE2E6;          /* Border Color */
+    --error-color: #DC3545;           /* Error/Red */
+    --success-color: #28A745;         /* Success/Green */
+    --warning-color: #FFC107;         /* Warning/Yellow */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.15);
+    --transition: all 0.3s ease;
+}
+
+/* ========================================
+   Reset & Base Styles
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ========================================
+   Typography
+   ======================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-medium);
+}
+
+/* ========================================
+   Container & Layout
+   ======================================== */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--background-white);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.page-header h1, .page-header h2, .page-header h3 {
+    color: var(--background-white);
+    margin-bottom: 0.5rem;
+}
+
+.content-wrapper {
+    background-color: var(--background-white);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+}
+
+/* ========================================
+   Navigation & Links
+   ======================================== */
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.nav-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    background-color: var(--background-white);
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    background-color: var(--primary-color);
+    color: var(--background-white);
+    text-decoration: none;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+
+button, .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--background-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: var(--background-white);
+}
+
+.btn-secondary {
+    background-color: var(--text-medium);
+    color: var(--background-white);
+}
+
+.btn-secondary:hover {
+    background-color: var(--text-dark);
+    text-decoration: none;
+    color: var(--background-white);
+}
+
+.btn-success {
+    background-color: var(--accent-color);
+    color: var(--background-white);
+}
+
+.btn-success:hover {
+    background-color: #059870;
+    text-decoration: none;
+    color: var(--background-white);
+}
+
+.btn-danger {
+    background-color: var(--error-color);
+    color: var(--background-white);
+}
+
+.btn-danger:hover {
+    background-color: #C82333;
+    text-decoration: none;
+    color: var(--background-white);
+}
+
+button:disabled, .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ========================================
+   Forms
+   ======================================== */
+
+form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--background-white);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--background-white);
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+input[type="submit"],
+button[type="submit"] {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* ========================================
+   Tables
+   ======================================== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--background-white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin: 2rem 0;
+}
+
+thead {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--background-white);
+}
+
+th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-dark);
+}
+
+tbody tr {
+    transition: var(--transition);
+}
+
+tbody tr:hover {
+    background-color: var(--background-light);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ========================================
+   Images
+   ======================================== */
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: var(--shadow-sm);
+}
+
+table img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+/* ========================================
+   Cards & Grid Layout
+   ======================================== */
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.card {
+    background-color: var(--background-white);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-5px);
+}
+
+/* ========================================
+   Alerts & Messages
+   ======================================== */
+
+.alert {
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    background-color: #D4EDDA;
+    border-color: var(--success-color);
+    color: #155724;
+}
+
+.alert-error,
+.alert-danger {
+    background-color: #F8D7DA;
+    border-color: var(--error-color);
+    color: #721C24;
+}
+
+.alert-warning {
+    background-color: #FFF3CD;
+    border-color: var(--warning-color);
+    color: #856404;
+}
+
+.alert-info {
+    background-color: #D1ECF1;
+    border-color: var(--accent-blue);
+    color: #0C5460;
+}
+
+/* ========================================
+   Rating Stars
+   ======================================== */
+
+.rating {
+    color: var(--warning-color);
+    font-weight: bold;
+}
+
+/* ========================================
+   Cart & Checkout
+   ======================================== */
+
+.cart-summary {
+    background-color: var(--background-white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    margin-top: 2rem;
+}
+
+.total-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 1rem 0;
+}
+
+#checkout-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+/* ========================================
+   Payment Success/Failure Pages
+   ======================================== */
+
+.payment-status-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 2rem;
+}
+
+.payment-card {
+    background-color: var(--background-white);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.status-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.status-success .status-icon {
+    color: var(--accent-color);
+}
+
+.status-error .status-icon {
+    color: var(--error-color);
+}
+
+.order-details {
+    background-color: var(--background-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.order-details p {
+    margin: 0.75rem 0;
+    color: var(--text-dark);
+}
+
+.order-details strong {
+    color: var(--text-dark);
+}
+
+/* ========================================
+   Utility Classes
+   ======================================== */
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-medium);
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .content-wrapper {
+        padding: 1rem;
+    }
+
+    form {
+        padding: 1.5rem;
+    }
+
+    table {
+        font-size: 0.875rem;
+    }
+
+    th, td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+    .page-header {
+        padding: 1.5rem;
+    }
+
+    .payment-card {
+        padding: 2rem 1.5rem;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* ========================================
+   Loading States
+   ======================================== */
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner {
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+    body {
+        background-color: white;
+    }
+
+    .nav-link,
+    button,
+    .btn {
+        display: none;
+    }
+
+    table {
+        box-shadow: none;
+    }
 }

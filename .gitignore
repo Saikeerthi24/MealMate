@@ -1,0 +1,4 @@
+requirements.txt
+db.sqlite3
+django
+SETUP.md

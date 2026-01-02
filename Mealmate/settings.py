@@ -116,3 +116,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Razorpay Configuration
+RAZORPAY_KEY_ID = 'your_razorpay_key_id'  # Replace with your Razorpay Key ID
+RAZORPAY_KEY_SECRET = 'your_razorpay_key_secret'  # Replace with your Razorpay Key Secret

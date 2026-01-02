@@ -18,5 +18,9 @@ urlpatterns = [
     path('update_restaurant/<int:restaurant_id>', views.update_restaurant, name='update_restaurant'), 
     path('delete_restaurant/<int:restaurant_id>', views.delete_restaurant, name='delete_restaurant'),
     path('add_to_cart/<int:item_id>/<str:username>', views.add_to_cart, name='add_to_cart'),
-    path ('show_cart/<str:username>', views.show_cart, name='show_cart'),
+    path('show_cart/<str:username>', views.show_cart, name='show_cart'),
+    path('initiate_payment/<str:username>/', views.initiate_payment, name='initiate_payment'),
+    path('payment_success/', views.payment_success, name='payment_success'),
+    path('payment_success_page/<str:order_id>/', views.payment_success_page, name='payment_success_page'),
+    path('payment_failure/', views.payment_failure_page, name='payment_failure'),
 ]
