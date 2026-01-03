@@ -57,8 +57,6 @@ Follow these steps to set up the project locally:
 3.  **Install Dependencies**
     ```bash
     pip install django razorpay
-    # Or if a requirements.txt exists:
-    # pip install -r requirements.txt
     ```
 
 4.  **Apply Migrations**
