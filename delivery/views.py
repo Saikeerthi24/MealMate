@@ -140,12 +140,26 @@ def delete_restaurant(request, restaurant_id):
 
     restaurantList = Restaurant.objects.all()
     return render(request, 'show_restaurants.html',{"restaurantList" : restaurantList})
+
+def delete_item(request, item_id):
+    item = Item.objects.get(id=item_id)
+    restaurant_id = item.restaurant.id
+    item.delete()
+    return redirect('open_update_menu', restaurant_id=restaurant_id)
 def add_to_cart(request, item_id, username):
     item = Item.objects.get(id = item_id)
     customer = User.objects.get(username = username)
     cart, created = Cart.objects.get_or_create(customer = customer)
     cart.items.add(item)
     return HttpResponse('added to cart')
+
+def remove_from_cart(request, item_id, username):
+    item = Item.objects.get(id=item_id)
+    customer = User.objects.get(username=username)
+    cart = Cart.objects.filter(customer=customer).first()
+    if cart:
+        cart.items.remove(item)
+    return redirect('show_cart', username=username)
 def show_cart(request, username):
     customer = User.objects.get(username = username)
     cart = Cart.objects.filter(customer=customer).first()

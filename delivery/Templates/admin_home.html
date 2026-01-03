@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <h3>Welcome to Admin HOME!</h3>
+{% extends 'base.html' %}
+{% load static %}
 
-    <a href="open_add_restaurant">ADD NEW RESTAURANT</a>
-    <br><br>
-    <a href="open_show_restaurant">SHOW RESTAURANTS</a>
-</body>
-</html>
+{% block title %}Admin Dashboard - MealMate{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 4rem;">
+    <h1>Welcome, Admin</h1>
+    <p>Manage your restaurants and menus from here.</p>
+
+    <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem;">
+        <a href="{% url 'open_add_restaurant' %}" class="card"
+            style="padding: 2rem; text-decoration: none; color: inherit; width: 300px;">
+            <h3 style="color: var(--primary-color);">Add Restaurant ➕</h3>
+            <p>Register a new restaurant partner.</p>
+        </a>
+
+        <a href="{% url 'open_show_restaurant' %}" class="card"
+            style="padding: 2rem; text-decoration: none; color: inherit; width: 300px;">
+            <h3 style="color: var(--primary-color);">Manage Restaurants 📋</h3>
+            <p>View, update, or delete existing restaurants.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

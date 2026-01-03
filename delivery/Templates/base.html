@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MealMate{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="nav-brand">MealMate</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            {% if username %}
+                <a href="#" class="nav-link">Hello, {{ username }}</a>
+                <a href="{% url 'show_cart' username %}" class="nav-link">Cart 🛒</a>
+                <a href="/" class="btn btn-primary">Logout</a>
+            {% else %}
+                <a href="{% url 'open_signin' %}" class="nav-link">Sign In</a>
+                <a href="{% url 'open_signup' %}" class="btn btn-primary">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>MealMate</h3>
+                <p>Delicious food delivered to your doorstep.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <p><a href="/" style="color: #fff;">Home</a></p>
+                <p><a href="{% url 'open_signin' %}" style="color: #fff;">Sign In</a></p>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>Email: support@mealmate.com</p>
+                <p>Phone: +91 123 456 7890</p>
+            </div>
+        </div>
+        <div style="margin-top: 2rem;">
+            &copy; 2024 MealMate. All rights reserved.
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

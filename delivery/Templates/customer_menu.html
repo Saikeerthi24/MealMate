@@ -1,47 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu - MealMate</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <h3>Welcome {{username}}!</h3>
+{% extends 'base.html' %}
+{% load static %}
 
-    <a href="{% url 'show_cart' username %}" >Go to cart</a>
+{% block title %}Menu - MealMate{% endblock %}
 
-    <!-- show current menu -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Item name</th>
-                <th>Picture</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Is veg?</th>
-                <th>Operation</th>
-            </tr>
-        </thead>
-        <tbody>
-            {%  for item in itemList %}
-                <tr>
-                    <td>{{ item.name }}</td>
-                    <td>
-                        <img src="{{ item.picture }}">
-                    </td>
-                    <td>{{ item.description }}</td>
-                    <td>{{ item.price }}</td>
-                    <td>{{ item.vegeterian }}</td>
-                    <td>
-                        <a href="{% url 'add_to_cart' item.id username %}">
-                            Add to cart
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>Menu: {{ restaurant.name }}</h1>
+    <a href="{% url 'show_cart' username %}" class="btn btn-primary">Go to Cart 🛒</a>
+</div>
+
+<div class="menu-grid">
+    {% for item in itemList %}
+    <div class="card">
+        <img src="{{ item.picture }}" alt="{{ item.name }}" class="card-img" style="height: 150px;">
+        <div class="card-body">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="card-title">{{ item.name }}</h3>
+                <span>
+                    {% if item.vegeterian %}
+                    <span
+                        style="color: green; border: 1px solid green; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem;">VEG</span>
+                    {% else %}
+                    <span
+                        style="color: red; border: 1px solid red; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem;">NON-VEG</span>
+                    {% endif %}
+                </span>
+            </div>
+            <p class="card-text">{{ item.description }}</p>
+            <p style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">₹{{ item.price }}</p>
+
+            <button onclick="addToCart({{ item.id }}, '{{ username }}')" class="btn btn-primary"
+                style="width: 100%;">Add to Cart</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function addToCart(itemId, username) {
+        fetch(`/add_to_cart/${itemId}/${username}`)
+            .then(response => {
+                if (response.ok) {
+                    alert('Item added to cart!');
+                } else {
+                    alert('Failed to add item to cart.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+{% endblock %}

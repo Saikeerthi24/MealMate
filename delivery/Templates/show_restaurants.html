@@ -1,50 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurants - MealMate</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    
-    <table border="1">
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Restaurants - MealMate{% endblock %}
+
+{% block content %}
+<h1>Manage Restaurants</h1>
+<a href="{% url 'open_add_restaurant' %}" class="btn btn-primary" style="margin-bottom: 1rem;">+ Add New Restaurant</a>
+
+<div style="overflow-x: auto;">
+    <table>
         <thead>
             <tr>
-                <th>Restaurant name</th>
-                <th>Picture</th>
+                <th>Name</th>
+                <th>Image</th>
                 <th>Cuisine</th>
                 <th>Rating</th>
-                <th>Operations</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {%  for r in restaurantList %}
-                <tr>
-                    <td>{{ r.name }}</td>
-                    <td>
-                        <img src="{{ r.picture }}">
-                    </td>
-                    <td>{{ r.cuisine }}</td>
-                    <td>{{ r.rating }}</td>
-                    <td>
-                        <a href="{% url 'open_update_restaurant' r.id %}">
-                            Update Restaurant Info
-                        </a>
-                        <br>
-                        <a href="{% url 'delete_restaurant' r.id %}">
-                            Delete Restaurant
-                        </a>
-                        <br>
-                        <a href="{% url 'open_update_menu' r.id %}">
-                            Update Menu
-                        </a>
-                    </td>
-                </tr>
+            {% for r in restaurantList %}
+            <tr>
+                <td>{{ r.name }}</td>
+                <td>
+                    <img src="{{ r.picture }}"
+                        style="width: 80px; height: 60px; object-fit: cover; border-radius: 4px;">
+                </td>
+                <td>{{ r.cuisine }}</td>
+                <td>{{ r.rating }} ⭐</td>
+                <td>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="{% url 'open_update_restaurant' r.id %}" class="btn"
+                            style="background-color: #3498db; color: white;">Info</a>
+                        <a href="{% url 'open_update_menu' r.id %}" class="btn"
+                            style="background-color: #f1c40f; color: black;">Menu</a>
+                        <a href="{% url 'delete_restaurant' r.id %}" class="btn btn-danger"
+                            onclick="return confirm('Are you sure?');">Delete</a>
+                    </div>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
-    
-</body>
-</html>
+</div>
+{% endblock %}

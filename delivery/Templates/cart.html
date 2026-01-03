@@ -1,75 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - MealMate</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-</head>
-<body>
-    <div class="content-wrapper">
-        <h2>Welcome {{username}}!</h2>
-        <a href="/" class="nav-link">Home</a>
-        
-        <!-- show current menu -->
-        <table>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cart - MealMate{% endblock %}
+
+{% block extra_head %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+{% endblock %}
+
+{% block content %}
+<h2>Your Cart</h2>
+{% if itemList %}
+<div style="overflow-x: auto;">
+    <table>
         <thead>
             <tr>
-                <th>Item Image</th>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            {% if itemList %}
-                {% for item in itemList %}
-                    <tr>
-                        <td>
-                            <img src="{{ item.picture }}" alt="{{ item.name }}" width="100" height="100">
-                        </td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.description }}</td>
-                        <td>₹{{ item.price }}</td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
+            {% for item in itemList %}
+            <tr>
+                <td>
+                    <img src="{{ item.picture }}" alt="{{ item.name }}"
+                        style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;">
+                </td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>₹{{ item.price }}</td>
+                <td>
+                    <a href="{% url 'remove_from_cart' item.id username %}" class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to remove this item?');">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
         </tbody>
-        </table>
-        
-        <div class="cart-summary">
-            <h2 class="total-price">Total price: ₹{{total_price}}</h2>
-            
-            {% if itemList %}
-                <form id="payment-form">
-                    {% csrf_token %}
-                    <button type="button" id="checkout-btn" class="btn btn-primary" onclick="initiatePayment()">CHECK OUT</button>
-                </form>
-            {% else %}
-                <div class="empty-state">
-                    <p>Your cart is empty. Start adding items!</p>
-                </div>
-            {% endif %}
-        </div>
-    </div>
+    </table>
+</div>
 
-    <script>
-        function initiatePayment() {
-            const username = "{{ username }}";
-            const checkoutBtn = document.getElementById('checkout-btn');
-            checkoutBtn.disabled = true;
-            checkoutBtn.textContent = 'Processing...';
+<div class="cart-summary" style="margin-top: 2rem; text-align: right;">
+    <h2 class="total-price">Total price: ₹{{total_price}}</h2>
 
-            fetch(`/initiate_payment/${username}/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                },
-                body: JSON.stringify({})
-            })
+    <form id="payment-form">
+        {% csrf_token %}
+        <button type="button" id="checkout-btn" class="btn btn-primary" onclick="initiatePayment()">CHECK OUT</button>
+    </form>
+</div>
+{% else %}
+<div class="empty-state" style="text-align: center; padding: 4rem;">
+    <h3>Your cart is empty.</h3>
+    <p>Go back to <a href="/">restaurants</a> and add some yummy food!</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function initiatePayment() {
+        // Ensure username is available in context or passed correctly
+        const username = "{{ username }}";
+        const checkoutBtn = document.getElementById('checkout-btn');
+        checkoutBtn.disabled = true;
+        checkoutBtn.textContent = 'Processing...';
+
+        fetch(`/initiate_payment/${username}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({})
+        })
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -87,18 +91,17 @@
                     description: data.description,
                     order_id: data.razorpay_order_id,
                     prefill: data.prefill,
-                    handler: function(response) {
-                        // Payment successful
+                    handler: function (response) {
                         handlePaymentSuccess(response, data.order_id);
                     },
                     modal: {
-                        ondismiss: function() {
+                        ondismiss: function () {
                             checkoutBtn.disabled = false;
                             checkoutBtn.textContent = 'CHECK OUT';
                         }
                     },
                     theme: {
-                        color: '#3399cc'
+                        color: '#ff5722'
                     }
                 };
 
@@ -111,21 +114,21 @@
                 checkoutBtn.disabled = false;
                 checkoutBtn.textContent = 'CHECK OUT';
             });
-        }
+    }
 
-        function handlePaymentSuccess(response, orderId) {
-            fetch('/payment_success/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                },
-                body: JSON.stringify({
-                    razorpay_order_id: response.razorpay_order_id,
-                    razorpay_payment_id: response.razorpay_payment_id,
-                    razorpay_signature: response.razorpay_signature
-                })
+    function handlePaymentSuccess(response, orderId) {
+        fetch('/payment_success/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
             })
+        })
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
@@ -140,7 +143,6 @@
                 alert('Payment verification error. Please contact support.');
                 window.location.href = '/payment_failure/';
             });
-        }
-    </script>
-</body>
-</html>
+    }
+</script>
+{% endblock %}

@@ -1,21 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Welcome page</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <div class="page-header">
-        <h1>Welcome to MealMate!</h1>
-        <p>Order delicious food from your favorite restaurants</p>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - MealMate{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="slide active"
+        style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
     </div>
-    
-    <div class="content-wrapper text-center">
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="open_signup" class="btn btn-primary">SIGN UP</a>
-            <a href="open_signin" class="btn btn-secondary">SIGN IN</a>
+    <div class="slide"
+        style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+    </div>
+    <div class="slide"
+        style="background-image: url('https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+    </div>
+
+    <div class="hero-text">
+        <h1>Welcome to MealMate</h1>
+        <p>Delicious food, delivered fast.</p>
+        <br>
+        <a href="{% url 'open_signin' %}" class="btn btn-primary">Order Now</a>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 3rem;">
+    <h2>Why Choose Us?</h2>
+    <div class="restaurant-grid" style="margin-top: 2rem;">
+        <div class="card">
+            <div class="card-body">
+                <h3>Fast Delivery</h3>
+                <p>We deliver in 30 minutes or less.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>Top Restaurants</h3>
+                <p>Partners with the best city restaurants.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>Fresh Food</h3>
+                <p>Always hot and fresh.</p>
+            </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    setInterval(nextSlide, 5000);
+</script>
+{% endblock %}

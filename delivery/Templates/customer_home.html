@@ -1,42 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Page</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <h3>Welcome {{username}}!</h3>
+{% extends 'base.html' %}
+{% load static %}
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Restaurant name</th>
-                <th>Picture</th>
-                <th>Cuisine</th>
-                <th>Rating</th>
-                <th>Operations</th>
-            </tr>
-        </thead>
-        <tbody>
-            {%  for r in restaurantList %}
-                <tr>
-                    <td>{{ r.name }}</td>
-                    <td>
-                        <img src="{{ r.picture }}">
-                    </td>
-                    <td>{{ r.cuisine }}</td>
-                    <td>{{ r.rating }}</td>
-                    <td>
-                        <a href="{% url 'view_menu' r.id username %}">
-                            View Menu
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+{% block title %}Restaurants - MealMate{% endblock %}
+
+{% block content %}
+<h1>Restaurants Near You</h1>
+
+<div class="restaurant-grid">
+    {% for r in restaurantList %}
+    <div class="card">
+        <img src="{{ r.picture }}" alt="{{ r.name }}" class="card-img">
+        <div class="card-body">
+            <h3 class="card-title">{{ r.name }}</h3>
+            <p class="card-text">
+                <strong>Cuisine:</strong> {{ r.cuisine }}<br>
+                <strong>Rating:</strong> ⭐ {{ r.rating }}
+            </p>
+            <a href="{% url 'view_menu' r.id username %}" class="btn btn-primary"
+                style="display: block; text-align: center;">View Menu</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
