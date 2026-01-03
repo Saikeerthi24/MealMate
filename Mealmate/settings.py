@@ -118,5 +118,5 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Razorpay Configuration
-RAZORPAY_KEY_ID = 'your_razorpay_key_id'  # Replace with your Razorpay Key ID
-RAZORPAY_KEY_SECRET = 'your_razorpay_key_secret'  # Replace with your Razorpay Key Secret
+RAZORPAY_KEY_ID = 'rzp_test_lT6VV3Hhr4yCQ'  # Replace with your Razorpay Key ID
+RAZORPAY_KEY_SECRET = 'eFILRtRtJqNpE4Qkz5a3K9'  # Replace with your Razorpay Key Secret
