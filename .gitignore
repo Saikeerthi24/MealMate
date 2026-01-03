@@ -1,4 +1,16 @@
-requirements.txt
+# Django
 db.sqlite3
-django
-SETUP.md
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+
+# Virtual Environment
+myenv/
+venv/
+env/
+
+# OS specific
+.DS_Store
+commands.txt 

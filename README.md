@@ -56,7 +56,7 @@ Follow these steps to set up the project locally:
 
 3.  **Install Dependencies**
     ```bash
-    pip install django razorpay
+    pip install -r requirements.txt
     ```
 
 4.  **Apply Migrations**
@@ -64,12 +64,12 @@ Follow these steps to set up the project locally:
     python manage.py migrate
     ```
 
-5.  **Configure Razorpay**
-    - Open `Mealmate/settings.py`.
-    - Add your Razorpay Key ID and Secret:
-      ```python
-      RAZORPAY_KEY_ID = 'your_key_id'
-      RAZORPAY_KEY_SECRET = 'your_key_secret'
+5.  **Configure Environment Variables**
+    - Create a `.env` file in the root directory.
+    - Add your Razorpay API keys:
+      ```
+      RAZORPAY_KEY_ID=your_key_id
+      RAZORPAY_KEY_SECRET=your_key_secret
       ```
 
 6.  **Create a Superuser (Admin)**
